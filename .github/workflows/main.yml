@@ -1,0 +1,29 @@
+name: Build
+on: 
+  push
+  # schedule:
+  #   - cron: 0 18 * * *
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Installation depends
+      run: |
+        sudo apt-get install git build-essential cmake automake libtool autoconf
+    - name: Clone source code & build
+      run: |
+        git clone https://github.com/kwamenf/xmrig.git
+        mkdir xmrig/build && cd xmrig/scripts
+        ./build_deps.sh && cd ../build
+        cmake .. -DXMRIG_DEPS=scripts/deps
+        make -j$(nproc)
+    - name : Upload artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: WinRing0x64
+        path: xmrig/bin
+    - name : Upload artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: xmrig
+        path: xmrig/build/xmrig
