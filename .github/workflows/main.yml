@@ -1,4 +1,4 @@
-name: Build
+name: ubuntu
 on: 
   push
   # schedule:
@@ -15,7 +15,7 @@ jobs:
         git clone https://github.com/kwamenf/xmrig.git
         mkdir xmrig/build && cd xmrig/scripts
         ./build_deps.sh && cd ../build
-        cmake .. -DXMRIG_DEPS=scripts/deps
+        cmake .. -DXMRIG_DEPS=scripts/deps -DBUILD_STATIC=ON
         make -j$(nproc)
     - name : Upload artifact
       uses: actions/upload-artifact@master
