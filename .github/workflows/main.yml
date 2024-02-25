@@ -9,6 +9,7 @@ jobs:
     steps:
     - name: Installation depends
       run: |
+        sudo apt update &
         sudo apt-get install git build-essential cmake automake libtool autoconf
     - name: Clone source code & build
       run: |
